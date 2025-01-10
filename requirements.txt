@@ -1,3 +1,2 @@
-requests
 pyodbc
 mbu_dev_shared_components
