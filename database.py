@@ -38,6 +38,8 @@ def get_form_metadata():
                 [spPullData]
             FROM
                 [RPA].[journalizing].[Metadata]
+            WHERE
+                [isActive] = 1
         """
 
         cursor.execute(query)
