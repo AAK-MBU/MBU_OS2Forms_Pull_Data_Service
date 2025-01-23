@@ -2,10 +2,11 @@
 Utility functions for API calls and logging a heartbeat.
 """
 
+import os
 import json
 import time
 from mbu_dev_shared_components.os2forms import forms
-from config import BASE_API_URL, FETCH_INTERVAL, HEARTBEAT_INTERVAL, API_KEY, DATABASE
+from config import BASE_API_URL, FETCH_INTERVAL, HEARTBEAT_INTERVAL, API_KEY
 from database import log_event, execute_stored_procedure
 
 
@@ -22,12 +23,7 @@ def fetch_data(form_type, form_source, destination_system, sp_pull_data, stop_ev
     """
     while not stop_event.is_set():
         try:
-            connection_string = (
-                f"DRIVER={{{DATABASE['driver']}}};"
-                f"SERVER={DATABASE['server']};"
-                f"DATABASE={DATABASE['database']};"
-                f"Trusted_Connection=yes;"
-            )
+            connection_string = os.getenv('DbConnectionString')
             response = forms.get_list_of_active_forms(BASE_API_URL, form_type, API_KEY)
             forms_dict = response.json().get('submissions', {})
             log_event(f"Fetching data from: {form_type}", "INFO")
