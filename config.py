@@ -4,12 +4,12 @@ Stores configuration settings for the service.
 
 import os
 
-# Fetch interval in seconds
+# Fetch interval in seconds (e.g., 5 minutes)
 FETCH_INTERVAL = 300
-SERVICE_CHECK_INTERVAL = 60
 
-# Heartbeat interval in seconds
+# Heartbeat interval in seconds (e.g., 1 minute)
 HEARTBEAT_INTERVAL = 60
+SERVICE_CHECK_INTERVAL = 60
 
 # Base API URL
 BASE_API_URL = "https://selvbetjening.aarhuskommune.dk/da"
