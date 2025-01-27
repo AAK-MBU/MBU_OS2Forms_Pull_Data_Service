@@ -6,7 +6,7 @@ import os
 import json
 import time
 from mbu_dev_shared_components.os2forms import forms
-from config import BASE_API_URL, FETCH_INTERVAL, HEARTBEAT_INTERVAL, API_KEY
+from config import BASE_API_URL, FETCH_INTERVAL, HEARTBEAT_INTERVAL
 from database import log_event, execute_stored_procedure
 
 
@@ -24,13 +24,16 @@ def fetch_data(form_type, form_source, destination_system, sp_pull_data, stop_ev
     while not stop_event.is_set():
         try:
             connection_string = os.getenv('DbConnectionString')
-            response = forms.get_list_of_active_forms(BASE_API_URL, form_type, API_KEY)
+            api_key = os.getenv('Os2FormsApiKey')
+
+            response = forms.get_list_of_active_forms(BASE_API_URL, form_type, api_key)
             forms_dict = response.json().get('submissions', {})
+
             log_event(f"Fetching data from: {form_type}", "INFO")
             if response.status_code == 200:
                 for form in forms_dict:
                     form_url = forms_dict[form]
-                    forms_response = forms.get_form(form_url, API_KEY)
+                    forms_response = forms.get_form(form_url, api_key)
                     form_sid = forms_response.json()['entity']['sid'][0]['value']
                     form_id = forms_response.json()['entity']['uuid'][0]['value']
                     form_type_fetched = forms_response.json()['entity']['webform_id'][0]['target_id']
