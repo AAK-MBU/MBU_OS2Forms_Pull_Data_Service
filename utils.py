@@ -24,7 +24,7 @@ def fetch_data(form_type, form_source, destination_system, sp_pull_data, stop_ev
     while not stop_event.is_set():
         try:
             connection_string = os.getenv('DbConnectionString')
-            api_key = os.getenv('Os2FormsApiKey')
+            api_key = os.getenv('Os2ApiKey')
 
             response = forms.get_list_of_active_forms(BASE_API_URL, form_type, api_key)
             forms_dict = response.json().get('submissions', {})
