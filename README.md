@@ -37,7 +37,7 @@
     ```
 
 3. Configure the service:
-   - Update `config.py` with your application-specific settings (e.g., API credentials, service intervals).
+   - Update `config.py` with your application-specific settings
 
 4. Install the service:
     ```bash

@@ -29,7 +29,6 @@ def get_form_metadata():
     cursor = connection.cursor()
 
     try:
-        # Define the SQL query with the additional columns
         query = """
             SELECT
                 [os2formWebformId],
