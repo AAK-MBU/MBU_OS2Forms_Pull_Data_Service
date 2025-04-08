@@ -39,6 +39,12 @@ def fetch_data(form_type, form_source, destination_system, sp_pull_data, stop_ev
                     form_type_fetched = forms_response.json()['entity']['webform_id'][0]['target_id']
                     form_submitted_date = forms_response.json()['entity']['completed'][0]['value']
                     form_data = json.dumps(forms_response.json(), ensure_ascii=False)
+
+                    if form_type_fetched in ('spoergeskema_hypnoterapi_foer_fo', 'henvisningsskema_til_klinisk_hyp', 'sundung_aarhus'):
+                        status = "Manuel"
+                    else:
+                        status = "New"
+
                     sql_params = {
                         "form_id": ("str", f'{form_id}'),
                         "form_sid": ("str", f'{form_sid}'),
@@ -47,6 +53,7 @@ def fetch_data(form_type, form_source, destination_system, sp_pull_data, stop_ev
                         "form_data": ("str", f'{form_data}'),
                         "form_submitted_date": ("str", f'{form_submitted_date}'),
                         "destination_system": ("str", f'{destination_system}'),
+                        "status": ("str", f'{status}'),
                     }
                     execute_stored_procedure(connection_string, sp_pull_data, sql_params)
             else:
