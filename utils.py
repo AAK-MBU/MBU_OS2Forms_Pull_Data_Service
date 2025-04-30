@@ -40,7 +40,12 @@ def fetch_data(form_type, form_source, destination_system, sp_pull_data, stop_ev
                     form_submitted_date = forms_response.json()['entity']['completed'][0]['value']
                     form_data = json.dumps(forms_response.json(), ensure_ascii=False)
 
-                    if form_type_fetched in ('spoergeskema_hypnoterapi_foer_fo', 'henvisningsskema_til_klinisk_hyp', 'sundung_aarhus', 'opfoelgende_spoergeskema_hypnote'):
+                    if form_type_fetched in (
+                        'spoergeskema_hypnoterapi_foer_fo', 
+                        'henvisningsskema_til_klinisk_hyp', 
+                        'sundung_aarhus', 
+                        'opfoelgende_spoergeskema_hypnote'
+                    ):
                         status = "Manuel"
                     else:
                         status = "New"

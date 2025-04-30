@@ -8,9 +8,10 @@ import win32serviceutil
 import win32service
 import win32event
 import servicemanager
-from config import SERVICE_CHECK_INTERVAL
+from mbu_dev_shared_components.database.logging import log_heartbeat
+from config import SERVICE_CHECK_INTERVAL, LOG_CONTEXT, HEARTBEAT_INTERVAL, ENV
 from database import get_form_metadata
-from utils import fetch_data, log_heartbeat
+from utils import fetch_data
 
 
 class DataFetcherService(win32serviceutil.ServiceFramework):
@@ -46,6 +47,14 @@ class DataFetcherService(win32serviceutil.ServiceFramework):
 
         # Terminate all child processes
         for form_type, process in self.processes.items():
+            if form_type == 'heartbeat':
+                log_heartbeat(
+                    self.stop_event,
+                    LOG_CONTEXT,
+                    HEARTBEAT_INTERVAL,
+                    "",
+                    ENV
+                )
             if process.is_alive():
                 servicemanager.LogMsg(servicemanager.EVENTLOG_INFORMATION_TYPE, 0xF000, (f"Terminating process for form_type: {form_type}", ""))
                 process.terminate()
@@ -80,7 +89,12 @@ class DataFetcherService(win32serviceutil.ServiceFramework):
         servicemanager.LogMsg(servicemanager.EVENTLOG_INFORMATION_TYPE, 0xF000, ("Service started.", ""))
 
         # Start heartbeat process
-        heartbeat_process = Process(target=log_heartbeat, args=(self.stop_event,))
+        heartbeat_process = Process(target=log_heartbeat, args=(
+            self.stop_event,
+            LOG_CONTEXT,
+            HEARTBEAT_INTERVAL,
+            "",
+            ENV))
         heartbeat_process.start()
         self.processes['heartbeat'] = heartbeat_process
         servicemanager.LogMsg(servicemanager.EVENTLOG_INFORMATION_TYPE, 0xF000, ("Heartbeat process started.", ""))
