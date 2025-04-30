@@ -11,3 +11,7 @@ SERVICE_CHECK_INTERVAL = 60
 
 # Base API URL
 BASE_API_URL = "https://selvbetjening.aarhuskommune.dk/da"
+
+# Context
+LOG_CONTEXT = "OS2Forms pull service"
+ENV = "PROD"
