@@ -49,7 +49,7 @@ class DataFetcherService(win32serviceutil.ServiceFramework):
         for form_type, process in self.processes.items():
             if form_type == 'heartbeat':
                 log_heartbeat(
-                    self.stop_event,
+                    self.stop_event.is_set(),
                     LOG_CONTEXT,
                     HEARTBEAT_INTERVAL,
                     "",
@@ -90,7 +90,7 @@ class DataFetcherService(win32serviceutil.ServiceFramework):
 
         # Start heartbeat process
         heartbeat_process = Process(target=log_heartbeat, args=(
-            self.stop_event,
+            self.stop_event.is_set(),
             LOG_CONTEXT,
             HEARTBEAT_INTERVAL,
             "",
