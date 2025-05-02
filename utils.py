@@ -41,12 +41,16 @@ def fetch_data(form_type, form_source, destination_system, sp_pull_data, stop_ev
                     form_data = json.dumps(forms_response.json(), ensure_ascii=False)
 
                     if form_type_fetched in (
-                        'spoergeskema_hypnoterapi_foer_fo', 
-                        'henvisningsskema_til_klinisk_hyp', 
-                        'sundung_aarhus', 
-                        'opfoelgende_spoergeskema_hypnote'
+                        'spoergeskema_hypnoterapi_foer_fo',
+                        'henvisningsskema_til_klinisk_hyp',
+                        'sundung_aarhus',
+                        'opfoelgende_spoergeskema_hypnote',
+                        'basisteam_spoergeskema_til_forae',
+                        'basisteam_spoergeskema_til_fagpe',
+                        'foraelder_en_god_overgang_fra_hj',
+                        'fagperson_en_god_overgang_fra_hj'
                     ):
-                        status = "Manuel"
+                        status = "Manual"
                     else:
                         status = "New"
 
