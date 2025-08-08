@@ -48,7 +48,8 @@ def fetch_data(form_type, form_source, destination_system, sp_pull_data, stop_ev
                         'basisteam_spoergeskema_til_forae',
                         'basisteam_spoergeskema_til_fagpe',
                         'foraelder_en_god_overgang_fra_hj',
-                        'fagperson_en_god_overgang_fra_hj'
+                        'fagperson_en_god_overgang_fra_hj',
+                        'center_for_trivles_esq_formular'
                     ):
                         status = "Manual"
                     else:
